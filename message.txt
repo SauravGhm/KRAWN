@@ -1,0 +1,5 @@
+hello from cron job>message.txt
+hello from cron job
+mkdir my-cron-test && cd my-cron-test
+echo Hello from cron job! > message.txt
+echo Hello from cron job
