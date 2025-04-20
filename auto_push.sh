@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Fix PATH for cron (optional but recommended)
-export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/opt/anaconda3/bin:/opt/anaconda3/condabin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 # Navigate to your repo
 cd /Users/sauravghimire/Documents/my-cron-test || exit 1
@@ -10,6 +10,11 @@ cd /Users/sauravghimire/Documents/my-cron-test || exit 1
 echo "Pushed at $(date)" >> message.txt
 
 # Git commit and push
-git add .
-git commit -m "Auto update at $(date '+%Y-%m-%d %H:%M:%S')" 2>/dev/null
-git push origin main
+echo "Using PATH: $PATH" >> cron.log
+git add message.txt
+if ! git diff --cached --quiet; then
+	git commit -m "Auto update at $(date '+%Y-%m-%d %H:%M:%S')"
+	git push origin main
+else
+	echo "[$(date)] Nothing to commit" >> cron.log
+fi
